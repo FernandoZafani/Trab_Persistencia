@@ -1,11 +1,12 @@
 const mongoose = require("mongoose");
-const uri="mongodb+srv://root:root@cluster0.dzz9frb.mongodb.net/?retryWrites=true&w=majority";
+const uri="mongodb+srv://root:root@cluster0.dzz9frb.mongodb.net/Persistencia?retryWrites=true&w=majority";
+
 
 
 const UsuarioSchema = mongoose.Schema({
     nome: String,
     senha: String,
-    pontos: [{type: mongoose.Types.ObjectId, ref: "Reciclagem"}],
+    pontos: [{type: mongoose.Types.ObjectId, ref: "Reciclagems"}],
     latitude: Number,
     longitude: Number
 });
@@ -29,24 +30,26 @@ const Premio = new mongoose.model("Premio", PremioSchema);
 const Reciclagem = new mongoose.model("Reciclagem", ReciclagemSchema);
 
 const insertusuario = async () => {
-    const usuario = new Usario({nome : "Fernando",senha : "123a",pontos: "6407c49a080cc92f6d4b5418",latitude: "200", longitude:"200"});
-    const save = await usuario.save();
-    return resultado;
+    const usuario = new Usario({nome : "Leonardo",senha : "123a",pontos: "642b62040bcd2eff3c223264",latitude: "200", longitude:"200"});
+    return await usuario.save();
 }
 
 const insertpremio = async () => {
     const premio = new Premio({descricao : "teste",pontos : "1000", quantidade : "2"});
-    const save = await premio.save();
-    return resultado;
+    return await premio.save();
 }
 
 const insertreciclagem = async () => {
     const reciclagem = new Reciclagem({descricao : "teste",pontos : "1000", quantidade : "2"});
-    const save = await reciclagem.save();
-    return resultado;
+    return await reciclagem.save();
 }
 
-insertpremio();
-insertusuario();
-insertreciclagem();
-console.log("OK");
+mongoose.connect(uri).then(async(conn)=>{
+
+    //insertpremio();
+    insertusuario();
+    //insertreciclagem();
+    console.log("OK");
+
+})
+
